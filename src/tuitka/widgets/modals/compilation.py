@@ -21,6 +21,7 @@ class CompilationScreen(ModalScreen):
 
     def __init__(self, python_version: str = PYTHON_VERSION, **nuitka_options) -> None:
         self.cwd = Path.cwd()
+        assert hasattr(self.app, "script") and isinstance(self.app.script, Path)
         os.chdir(self.app.script.parent)
         super().__init__()
         self.python_version = python_version
@@ -30,6 +31,7 @@ class CompilationScreen(ModalScreen):
         self.deps_metadata = None
 
     def compose(self) -> ComposeResult:
+        assert hasattr(self.app, "script") and isinstance(self.app.script, Path)
         self.nuitka_command, self.deps_metadata = prepare_nuitka_command(
             self.app.script, self.python_version, **self.nuitka_options
         )

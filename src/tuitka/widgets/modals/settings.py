@@ -1,6 +1,7 @@
 from textual import on
 from textual.app import ComposeResult
 from textual.containers import Horizontal, ScrollableContainer
+from textual.css.query import DOMQuery
 from textual.screen import ModalScreen
 from textual.widgets import Button, Collapsible, Input, Static
 
@@ -124,10 +125,15 @@ class NuitkaSettingsScreen(ModalScreen[dict | None]):
 
     def filter_settings(self, search_term: str) -> None:
         query_selector = (
-            "ModalBoolFlag, ModalStringFlag, ModalSelectionFlag, ModalRadioFlag"
+            ModalBoolFlag,
+            ModalStringFlag,
+            ModalSelectionFlag,
+            ModalRadioFlag,
         )
-        all_widgets = self.query(query_selector)
-        all_collapsibles = self.query(Collapsible)
+        all_widgets: list[ModalBoolFlag | ModalStringFlag | ModalSelectionFlag | ModalRadioFlag] = []
+        for selector in query_selector:
+            all_widgets.extend(self.query(selector))
+        all_collapsibles: DOMQuery[Collapsible] = self.query(Collapsible)
 
         if not search_term:
             for widget in all_widgets:

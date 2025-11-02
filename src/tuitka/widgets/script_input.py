@@ -15,9 +15,9 @@ from tuitka.widgets.modals import (
 
 
 class ScriptInput(Input):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self) -> None:
         super().__init__(
-            placeholder="Enter path to Python script to compile", *args, **kwargs
+            placeholder="Enter path to Python script to compile", id="script_input"
         )
 
     def on_mount(self) -> None:
@@ -25,7 +25,7 @@ class ScriptInput(Input):
 
     def on_input_changed(self, event: Input.Changed) -> None:
         """Update app script when input changes."""
-        self.app.script = Path(self.value.strip())
+        setattr(self.app, "script", Path(self.value.strip()))
 
 
 class ScriptInputWidget(Container):
@@ -144,7 +144,7 @@ class ScriptInputWidget(Container):
             )
 
             with Vertical(id="input_section"):
-                yield ScriptInput(id="script_input")
+                yield ScriptInput()
                 with Center():
                     yield Button("Browse Files", variant="primary", id="browse_button")
 
@@ -237,7 +237,7 @@ class ScriptInputWidget(Container):
     def _handle_file_selection(self, selected_file: str | None) -> None:
         if selected_file:
             self.query_one("#script_input", ScriptInput).value = selected_file
-            self.app.script = selected_file
+            setattr(self.app, "script", selected_file)
             self.query_one("#compilation_options_container").display = True
 
     def _handle_custom_settings(self, settings: dict | None) -> None:

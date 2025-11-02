@@ -73,8 +73,8 @@ class SplashScreen(ModalScreen):
         self.char_index += 1
 
     def get_random_offset(self, magnitude: float = 15.0) -> Offset:
-        x_offset = uniform(-magnitude, magnitude)
-        y_offset = uniform(-magnitude * 0.4, magnitude * 0.4)
+        x_offset = int(uniform(-magnitude, magnitude))
+        y_offset = int(uniform(-magnitude * 0.4, magnitude * 0.4))
         return Offset(x_offset, y_offset)
 
     def dismiss_splash(self) -> None:

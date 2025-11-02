@@ -1,4 +1,5 @@
 import sys
+from tuitka.constants import PYTHON_VERSION
 from tuitka.tui import NuitkaTUI
 from pathlib import Path
 from tuitka.utils import chdir_context, error
@@ -23,7 +24,7 @@ def main() -> None:
         }
 
         with chdir_context(path.parent):
-            inline_app = InlineCompilationApp(path, **default_options)
+            inline_app = InlineCompilationApp(path, python_version=PYTHON_VERSION, **default_options)
             inline_app.run(inline=True)
             return
 

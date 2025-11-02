@@ -21,11 +21,7 @@ def error(message: str, title: str = "Error", subtitle: Optional[str] = None):
     from rich import print
     from rich.panel import Panel
 
-    panel_kwargs = {"title": title, "border_style": "red"}
-    if subtitle:
-        panel_kwargs["subtitle"] = subtitle
-
-    print(Panel.fit(message, **panel_kwargs))
+    print(Panel.fit(message, title=title, border_style="red", subtitle=subtitle))
 
 
 @contextmanager
@@ -216,7 +212,7 @@ def prepare_nuitka_command(
     dependencies_metadata = parse_dependencies(script_path)
     original_is_standalone = nuitka_options.get("--standalone", False)
     original_is_onefile = nuitka_options.get("--onefile", False)
-    
+
     if platform_name == "darwin":
         if original_is_onefile or original_is_standalone:
             nuitka_options.pop("--onefile", None)
