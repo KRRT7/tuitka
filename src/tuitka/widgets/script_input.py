@@ -1,6 +1,6 @@
 from textual import on
 from textual.app import ComposeResult
-from textual.containers import Vertical, Center, Container
+from textual.containers import ScrollableContainer, Vertical, Center
 from textual.widgets import Button, Input, Static
 from textual.widgets import RadioButton, RadioSet
 from tuitka.constants import PYTHON_VERSION
@@ -28,7 +28,7 @@ class ScriptInput(Input):
         self.app.script = Path(self.value.strip())
 
 
-class ScriptInputWidget(Container):
+class ScriptInputWidget(ScrollableContainer):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.custom_settings = None
