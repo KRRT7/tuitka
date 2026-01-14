@@ -1,9 +1,18 @@
+import sys
 from pathlib import Path
+
+IS_COMPILED_OR_FROZEN = "__compiled__" in globals() or hasattr(sys, "frozen")
+
+
+def get_assets_dir() -> Path:
+    if IS_COMPILED_OR_FROZEN:
+        return Path(sys.executable).parent / "tuitka_assets"
+    else:
+        return Path(__file__).parent
 
 
 def get_asset_path(asset_name: str) -> Path:
-    assets_dir = Path(__file__).parent
-    return assets_dir / asset_name
+    return get_assets_dir() / asset_name
 
 
 STYLE_MAIN = get_asset_path("style.tcss")
